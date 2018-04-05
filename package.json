@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/WildCodeSchool/reims-0218-hackaton-TAM#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "express": "^4.16.3"
   }
 }
