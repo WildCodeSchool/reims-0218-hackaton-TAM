@@ -4,63 +4,71 @@ const render = html => {
   mainDiv.innerHTML = html
 }
 
-const makeCard = item => `
-  <div class="col-md-4">
-    <div class="card mb-4 box-shadow">
-      <img class="card-img-top" src="${item.image}" alt="Thumbnail [100%x225]" />
-      <div class="card-body">
-        <p class="card-text" style="height: 80px">${item.bio}</p>
-        <a class="btn btn-primary" href="/users/${item.slug}">${item.firstName}'s profile &raquo;</a>
-      </div>
-    </div>
-  </div>`
-
-const serializeForm = form => {
-  const data = {}
-  const elements = form.getElementsByClassName('form-control')
-  for(el of elements) {
-    data[el.name] = el.value
-  }
-  return data
-}
-
 const controllers = {
 
-  '/': () =>
-    // rendu de la page html index
-    render(
-    ``)
-  ,
+  '/': () => render('<h1>Acceuil</h1>'),
 
   '/pierre-papier-ciseau': () => {
-    // rendu de la page playgame
-    render(
-    ``
+   // rendu de la page playgame
+   render(
+    `<div class="container-fluid">
+        <div class="row justify-content-around">
+            <div class="col-2" style="background-color: lightgray">
+              <img src="http://via.placeholder.com/300x300" alt="#" class="img-fluid">
+            </div>
+            <div class="col-5 text-center" style="background-color: lightgray">
+                <div id="resultat"></div>
+                <button type="button" class="btn btn-primary btn-lg">Pierre</button>
+                <button type="button" class="btn btn-primary btn-lg">Papier</button>
+                <button type="button" class="btn btn-primary btn-lg">Ciseau</button>
+            </div>
+            <div class="col-2" style="background-color: lightgray">
+              <img src="http://via.placeholder.com/300x300" alt="#" class="img-fluid">
+            </div>
+        </div>
+      </div>`
   )
-    const game = document.getElementById('game')
-  },
+  const buttons = document.querySelectorAll("button")
 
-  '/superheros': superHeros => {
-    fetch('https://akabab.github.io/superhero-api/api/all.json')
-    .then(res => res.json())
-    .then(superHeros => console.log(superHeros))
+  for(let i = 0; i < buttons.length; i++){
+    buttons[i].addEventListener("click", choix = () =>{
+      const joueur = buttons[i].innerHTML
+      const robot = buttons[Math.floor(Math.random() * buttons.length)].innerHTML
+      let resultat = ""
+
+      if(joueur === robot){
+        resultat = "Egalité"
+      } else if((joueur === "Pierre" && robot === "Ciseau") || (joueur === "Papier" && robot === "Pierre") || (joueur === "Ciseau" && robot === "Papier")) {
+        resultat = "Gagné"
+      }else{
+        resultat = "Perdu"
+      }
+      //console.log(`${resultat}`)
+      document.getElementById("resultat").innerHTML = `
+    Joueur: ${joueur}</br>
+    Robot: ${robot}</br>
+    ${resultat}
+    `
+    })
+  }
   },
 
   '*': () => render('<h1>Not Found</h1>')
 }
 
 
-const route = pathname => {
-
-}
-
-
-(() => {
-
-  ['/', '/pierre-papier-ciseau', '/superheros', '*'].forEach(
+// gére l'execution du routing coté client
+const routing = () => {
+  const routes = [
+    '/',
+    '/pierre-papier-ciseau',
+    '*'
+  ]
+  routes.forEach(
     path => page(path, controllers[path])
   )
   page()
-  // route()
+}
 
-})()
+//appel cette fonction pour gérer les routes
+routing()
