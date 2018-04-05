@@ -1,0 +1,22 @@
+{
+  "name": "reims-0218-hackaton-tam",
+  "version": "1.0.0",
+  "description": "Thibaud - Arnaud - Maxence",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WildCodeSchool/reims-0218-hackaton-TAM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WildCodeSchool/reims-0218-hackaton-TAM/issues"
+  },
+  "homepage": "https://github.com/WildCodeSchool/reims-0218-hackaton-TAM#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
