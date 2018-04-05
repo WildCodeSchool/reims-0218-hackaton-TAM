@@ -44,7 +44,7 @@ const controllers = {
     fetch('https://akabab.github.io/superhero-api/api/all.json')
     .then(res => res.json())
     .then(superHeros => console.log(superHeros))
-  },
+ },
 
   '*': () => render('<h1>Not Found</h1>')
 }
