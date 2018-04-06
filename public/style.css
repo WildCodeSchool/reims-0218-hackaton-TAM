@@ -1,0 +1,32 @@
+/* The animation code */
+@keyframes left {
+    0%   {left:0px; top:0px;}
+    25%  {left:0px; top:0px;}
+    50%  {left:200px; top:0px;}
+    75%  {left:200px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+/* The animation code */
+@keyframes right {
+    0%   {right:0px; top:0px;}
+    25%  {right:0px; top:0px;}
+    50%  {right:200px; top:0px;}
+    75%  {right:200px; top:0px;}
+    100% {right:0px; top:0px;}
+}
+
+/* The element to apply the animation to */
+.divleft {
+    width: 100px;
+    height: 100px;
+    animation-name: left;
+    animation-duration: 4s;
+}
+
+.divright {
+    width: 100px;
+    height: 100px;
+    animation-name: right;
+    animation-duration: 4s;
+}
