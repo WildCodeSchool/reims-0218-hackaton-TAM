@@ -54,47 +54,101 @@ const controllers = {
 
   '/pierre-papier-ciseau': () => {
    // rendu de la page playgame
+   fetch('https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/all.json')
+    .then(resp => {
+      return resp.json()
+      })
+      .then(all => {
+      const p1 = all[393]
+      const p2 = all[Math.floor(Math.random() * (0, 500))]
+      
+    
    render(
     `<div class="container-fluid">
         <div class="row justify-content-around">
-            <div class="col-2 divleft" style="background-color: lightgray">
-              <img src="http://via.placeholder.com/300x300" alt="#" class="img-fluid">
+            <div class="col-2" style="background-color: lightgray">
+              <img src="${p1.images.lg}" alt="#" class="img-fluid">
+              <h2>Pv: <span id="statP1"></span></h2>
             </div>
             <div class="col-5 text-center" style="background-color: lightgray">
-                <div id="resultat"></div>
-                <button type="button" class="btn btn-primary btn-lg">Pierre</button>
-                <button type="button" class="btn btn-primary btn-lg">Papier</button>
-                <button type="button" class="btn btn-primary btn-lg">Ciseau</button>
+                
+                <div id="resultat" style="font-size: 30px"></div>
+                <button type="button" class="btn btn-primary btn-lg mt-5 mr-3">Pierre</button>
+                <button type="button" class="btn btn-primary btn-lg mt-5 mr-3">Papier</button>
+                <button type="button" class="btn btn-primary btn-lg mt-5 mr-3">Ciseau</button>
+                <div id="gagnant" class="mt-5" style="font-size: 40px"></div>
             </div>
-            <div class="col-2 divright" style="background-color: lightgray">
-              <img src="http://via.placeholder.com/300x300" alt="#" class="img-fluid">
+            <div class="col-2" style="background-color: lightgray">
+              <img src="${p2.images.lg}" alt="#" class="img-fluid">
+              <h2>Pv: <span id="statP2"></span></h2>
             </div>
         </div>
       </div>`
   )
   const buttons = document.querySelectorAll("button")
-
+      let p1_pv = 100
+      const p1_pvMax = 100
+      let p2_pv = 100
+      const p2_pvMax = 100
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", choix = () =>{
-      const joueur = buttons[i].innerHTML
-      const robot = buttons[Math.floor(Math.random() * buttons.length)].innerHTML
+      const choix_p1 = buttons[i].innerHTML
+      const choix_p2 = buttons[Math.floor(Math.random() * buttons.length)].innerHTML
+      const statP1 = document.getElementById("statP1")
+      const statP2 = document.getElementById("statP2")
       let resultat = ""
-
-      if(joueur === robot){
+    if ((p1_pv > 0) && (p2_pv > 0)){
+      if(choix_p1 === choix_p2){
+        p1_pv-= p2.powerstats.strength/2
+        p2_pv-= (p1.powerstats.strength/2)* 10
         resultat = "Egalité"
-      } else if((joueur === "Pierre" && robot === "Ciseau") || (joueur === "Papier" && robot === "Pierre") || (joueur === "Ciseau" && robot === "Papier")) {
+      } else if((choix_p1 === "Pierre" && choix_p2 === "Ciseau") || (choix_p1 === "Papier" && choix_p2 === "Pierre") || (choix_p1 === "Ciseau" && choix_p2 === "Papier")) {
+        p2_pv-= p1.powerstats.strength * 2
         resultat = "Gagné"
       }else{
+        p1_pv-= p2.powerstats.strength/4
         resultat = "Perdu"
       }
-      //console.log(`${resultat}`)
+      statP1.innerHTML = statP1.value = p1_pv;
+      statP2.innerHTML = statP2.value = p2_pv;
       document.getElementById("resultat").innerHTML = `
-    Joueur: ${joueur}</br>
-    Robot: ${robot}</br>
-    ${resultat}
+      ${p1.name}: ${choix_p1} VS
+      ${p2.name}: ${choix_p2}
+    
     `
+    }else{
+      const modal = `<!-- Large modal -->
+      <button type="button" class="btn btn-primary .d-none" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+      
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            ...
+          </div>
+        </div>
+      </div>`
+      if(statP1.value > statP2.value) {
+        document.getElementById("gagnant").innerHTML = `<strong>Partie terminée</strong> <br>
+         Le joueur ${p1.name} a gagné`
+      } else {
+        document.getElementById("gagnant").innerHTML = `<strong>Partie terminée</strong> <br>
+        Le joueur ${p2.name} a gagné`
+      }
+    }
     })
-  }
+  }})
+  },
+
+  '/rpg': () => {
+    fetch('https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/all.json')
+    .then(resp => {
+      return resp.json()
+      })
+      .then(all => {
+      const choix_p1 = all[393]
+      const ennemi = all[525]
+      
+    })
   },
 
   '*': () => render('<h1>Not Found</h1>')
@@ -106,6 +160,7 @@ const routing = () => {
   const routes = [
     '/',
     '/pierre-papier-ciseau',
+    '/rpg',
     '*'
   ]
   routes.forEach(
