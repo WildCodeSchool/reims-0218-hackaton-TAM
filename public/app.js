@@ -67,8 +67,8 @@ const controllers = {
       statP1.innerHTML = statP1.value = p1_pv;
       statP2.innerHTML = statP2.value = p2_pv;
       document.getElementById("resultat").innerHTML = `
-    Joueur: ${choix_p1}
-    Robot: ${choix_p2}
+      ${p1.name}: ${choix_p1} VS
+      ${p2.name}: ${choix_p2}
     ${resultat}
     `
     }else{
@@ -76,18 +76,6 @@ const controllers = {
     }
     })
   }})
-  },
-
-  '/rpg': () => {
-    fetch('https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/all.json')
-    .then(resp => {
-      return resp.json()
-      })
-      .then(all => {
-      const choix_p1 = all[393]
-      const ennemi = all[525]
-      
-    })
   },
 
   '*': () => render('<h1>Not Found</h1>')
@@ -99,7 +87,6 @@ const routing = () => {
   const routes = [
     '/',
     '/pierre-papier-ciseau',
-    '/rpg',
     '*'
   ]
   routes.forEach(
