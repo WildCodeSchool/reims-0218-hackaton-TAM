@@ -139,18 +139,6 @@ const controllers = {
   }})
   },
 
-  '/rpg': () => {
-    fetch('https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/all.json')
-    .then(resp => {
-      return resp.json()
-      })
-      .then(all => {
-      const choix_p1 = all[393]
-      const ennemi = all[525]
-      
-    })
-  },
-
   '*': () => render('<h1>Not Found</h1>')
 }
 
@@ -160,7 +148,6 @@ const routing = () => {
   const routes = [
     '/',
     '/pierre-papier-ciseau',
-    '/rpg',
     '*'
   ]
   routes.forEach(
